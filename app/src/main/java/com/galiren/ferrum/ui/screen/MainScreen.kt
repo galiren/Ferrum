@@ -54,7 +54,7 @@ data object MainScreen : Screen {
 
   sealed interface Event : CircuitUiEvent {
     data class OpenDialog(val expense: Expense? = null) : Event
-    data class DialogConfirm(val expenseEntity: ExpenseEntity) : Event
+    data class ExpenseDialogConfirm(val expenseEntity: ExpenseEntity) : Event
     data class OpenDeletionDialog(val id: Int) : Event
     data class ItemDeletion(val id: Int) : Event
     data object CloseExpenseDialog : Event
@@ -165,7 +165,7 @@ fun ExpenseList(
             state.eventSink(MainScreen.Event.CloseDeletionDialog)
           },
           onConfirmation = {
-            state.eventSink(MainScreen.Event.DialogConfirm(it))
+            state.eventSink(MainScreen.Event.ExpenseDialogConfirm(it))
           },
           itemDeleteAction = {
             state.eventSink(MainScreen.Event.ItemDeletion(it))
@@ -225,7 +225,6 @@ private fun ExpenseList(
           fontWeight = FontWeight.Bold,
         )
         Text(
-          // todo change it later!!!
           text = expenses.totalCost().toString(),
           fontSize = 15.sp,
           fontWeight = FontWeight.Bold,

@@ -67,9 +67,7 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
             isShowDeletionDialog = false
           }
         }
-        is MainScreen.Event.DialogConfirm -> {
-          // todo insert data into db
-          Log.d("ferrum-app", "dialog confirm")
+        is MainScreen.Event.ExpenseDialogConfirm -> {
           isShowExpenseDialog = false
           isLoading = true
           scope.launch(Dispatchers.IO) {
