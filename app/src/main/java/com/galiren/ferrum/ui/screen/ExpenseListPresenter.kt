@@ -46,7 +46,7 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
     var dialogData by remember { mutableStateOf<Expense?>(null) }
     var deleteItemId by remember { mutableStateOf<Int?>(null) }
     return MainScreen.State(
-      isLoading = false,
+      isLoading = isLoading,
       expenses = expenses.value,
       isShowExpenseDialog = isShowExpenseDialog,
       isShowDeletionDialog = isShowDeletionDialog,
@@ -75,8 +75,8 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
           isShowExpenseDialog = false
           isLoading = true
           scope.launch(Dispatchers.IO) {
+            delay(3000)
             expenseDao.upsert(event.expenseEntity)
-            isLoading = false
           }
         }
         is MainScreen.Event.CloseExpenseDialog -> {

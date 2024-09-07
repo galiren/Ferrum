@@ -1,5 +1,6 @@
 package com.galiren.ferrum.ui.screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +44,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data object MainScreen : Screen {
   data class State(
-    val isLoading: Boolean = false,
+    val isLoading: Boolean,
     val expenses: List<Expense> = emptyList(),
     val isShowExpenseDialog: Boolean = false,
     val isShowDeletionDialog: Boolean = false,
@@ -137,10 +138,12 @@ fun ExpenseList(
       }
     },
   ) { paddingValues ->
+    Log.d("ferrum-app", "state.isLoading: [${state.isLoading}]")
     when (state.isLoading) {
       true -> {
         Column(
-          modifier = modifier.fillMaxSize()
+          modifier = modifier
+            .fillMaxSize()
             .padding(paddingValues),
           horizontalAlignment = Alignment.CenterHorizontally,
           verticalArrangement = Arrangement.Center,
