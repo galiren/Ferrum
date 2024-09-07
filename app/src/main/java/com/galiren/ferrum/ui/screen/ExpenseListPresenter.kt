@@ -7,12 +7,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.galiren.ferrum.data.Expense
 import com.galiren.ferrum.data.db.ExpenseDao
 import com.galiren.ferrum.data.toExpenseList
 import com.slack.circuit.runtime.presenter.Presenter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -36,7 +38,9 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
         isLoading = false
         it.toExpenseList()
       }
-      .collectAsState(initial = emptyList())
+      .collectAsStateWithLifecycle(
+        initialValue = emptyList()
+      )
     var isShowExpenseDialog by remember { mutableStateOf(false) }
     var isShowDeletionDialog by remember { mutableStateOf(false) }
     var dialogData by remember { mutableStateOf<Expense?>(null) }
@@ -71,7 +75,6 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
           isShowExpenseDialog = false
           isLoading = true
           scope.launch(Dispatchers.IO) {
-            Log.d("ferrum-app", event.expenseEntity.toString())
             expenseDao.upsert(event.expenseEntity)
             isLoading = false
           }
