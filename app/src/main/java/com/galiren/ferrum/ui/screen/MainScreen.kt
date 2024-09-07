@@ -1,6 +1,5 @@
 package com.galiren.ferrum.ui.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -54,6 +53,7 @@ data object MainScreen : Screen {
   ) : CircuitUiState
 
   sealed interface Event : CircuitUiEvent {
+    data object Init : Event
     data class OpenDialog(val expense: Expense? = null) : Event
     data class ExpenseDialogConfirm(val expenseEntity: ExpenseEntity) : Event
     data class OpenDeletionDialog(val id: Int) : Event
@@ -138,7 +138,6 @@ fun ExpenseList(
       }
     },
   ) { paddingValues ->
-    Log.d("ferrum-app", "state.isLoading: [${state.isLoading}]")
     when (state.isLoading) {
       true -> {
         Column(
@@ -150,6 +149,7 @@ fun ExpenseList(
         ) {
           CircularProgressIndicator()
         }
+        state.eventSink(MainScreen.Event.Init)
       }
       else -> {
         ExpenseList(

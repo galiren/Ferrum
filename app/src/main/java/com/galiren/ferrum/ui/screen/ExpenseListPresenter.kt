@@ -1,8 +1,6 @@
 package com.galiren.ferrum.ui.screen
 
-import android.util.Log
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,11 +33,10 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
     var isLoading by remember { mutableStateOf(true) }
     val expenses = expenses
       .map {
-        isLoading = false
         it.toExpenseList()
       }
       .collectAsStateWithLifecycle(
-        initialValue = emptyList()
+        initialValue = emptyList(),
       )
     var isShowExpenseDialog by remember { mutableStateOf(false) }
     var isShowDeletionDialog by remember { mutableStateOf(false) }
@@ -54,6 +51,13 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
       deleteItemId = deleteItemId,
     ) { event ->
       when (event) {
+        is MainScreen.Event.Init -> {
+          scope.launch(Dispatchers.IO) {
+            // wait for 2 seconds
+            delay(2000)
+            isLoading = false
+          }
+        }
         is MainScreen.Event.OpenDialog -> {
           // todo open item details
           dialogData = event.expense
@@ -75,8 +79,9 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope
           isShowExpenseDialog = false
           isLoading = true
           scope.launch(Dispatchers.IO) {
-            delay(3000)
+            delay(1000)
             expenseDao.upsert(event.expenseEntity)
+            isLoading = false
           }
         }
         is MainScreen.Event.CloseExpenseDialog -> {

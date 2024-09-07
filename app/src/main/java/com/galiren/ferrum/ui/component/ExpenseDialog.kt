@@ -95,11 +95,11 @@ fun ExpenseDialog(
                   title = title,
                   cost = cost.toDouble(),
                 )
-              }
+              },
             )
           },
         ) {
-          if (data !=  null) {
+          if (data != null) {
             Text(
               text = "Done",
               fontSize = 16.sp,
@@ -112,7 +112,6 @@ fun ExpenseDialog(
               fontWeight = FontWeight.Bold,
             )
           }
-
         }
         Spacer(modifier = Modifier.padding(horizontal = 10.dp))
         Button(
