@@ -84,18 +84,35 @@ fun ExpenseDialog(
               return@Button
             }
             onConfirmation(
-              ExpenseEntity(
-                title = title,
-                cost = cost.toDouble(),
-              ),
+              if (data != null) {
+                ExpenseEntity(
+                  id = data.id,
+                  title = title,
+                  cost = cost.toDouble(),
+                )
+              } else {
+                ExpenseEntity(
+                  title = title,
+                  cost = cost.toDouble(),
+                )
+              }
             )
           },
         ) {
-          Text(
-            text = "Add",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-          )
+          if (data !=  null) {
+            Text(
+              text = "Done",
+              fontSize = 16.sp,
+              fontWeight = FontWeight.Bold,
+            )
+          } else {
+            Text(
+              text = "Add",
+              fontSize = 16.sp,
+              fontWeight = FontWeight.Bold,
+            )
+          }
+
         }
         Spacer(modifier = Modifier.padding(horizontal = 10.dp))
         Button(
