@@ -16,7 +16,7 @@ class FerrumFactory(private val application: FerrumApplication, private val scop
     context: CircuitContext,
   ): Presenter<*>? {
     return when (screen) {
-      is MainScreen -> ExpenseListPresenter(application.dao, scope)
+      is MainScreen -> ExpenseListPresenter(application.dao)
       else -> null
     }
   }

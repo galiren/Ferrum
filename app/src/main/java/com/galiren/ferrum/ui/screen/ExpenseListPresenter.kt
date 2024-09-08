@@ -4,34 +4,38 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.galiren.ferrum.data.Expense
 import com.galiren.ferrum.data.db.ExpenseDao
 import com.galiren.ferrum.data.toExpenseList
 import com.slack.circuit.runtime.presenter.Presenter
+import kotlin.math.log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 // todo should the flow start in scope provided by lifeCycleOwner?
-class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope: CoroutineScope) : Presenter<MainScreen.State> {
-  private var expenses = expenseDao.getAll()
-    .stateIn(
-      scope,
-      SharingStarted.WhileSubscribed(5000),
-      emptyList(),
-    )
+class ExpenseListPresenter(private val expenseDao: ExpenseDao) : Presenter<MainScreen.State> {
 
   @Composable
   override fun present(): MainScreen.State {
+    val scope = rememberCoroutineScope()
+    val internExpense = remember {
+      expenseDao.getAll()
+        .stateIn(
+          scope,
+          SharingStarted.WhileSubscribed(5000),
+          emptyList(),
+        )
+    }
     var isLoading by remember { mutableStateOf(true) }
-    val expenses = expenses
+    val expenses = internExpense
       .map {
         it.toExpenseList()
       }
