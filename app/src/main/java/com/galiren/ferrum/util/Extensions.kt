@@ -13,5 +13,5 @@ fun String.isLegalCost(): Boolean {
       }
     }
   }
-  return true
+  return indexOf('.') + 3 >= length
 }
