@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
+// todo should the flow start in scope provided by lifeCycleOwner?
 class ExpenseListPresenter(private val expenseDao: ExpenseDao, private val scope: CoroutineScope) : Presenter<MainScreen.State> {
   private var expenses = expenseDao.getAll()
-    .flowOn(Dispatchers.IO)
     .stateIn(
       scope,
       SharingStarted.WhileSubscribed(5000),
