@@ -11,8 +11,6 @@ import com.galiren.ferrum.data.Expense
 import com.galiren.ferrum.data.db.ExpenseDao
 import com.galiren.ferrum.data.toExpenseList
 import com.slack.circuit.runtime.presenter.Presenter
-import kotlin.math.log
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
