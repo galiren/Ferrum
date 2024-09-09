@@ -3,6 +3,7 @@ plugins {
   alias(libs.plugins.kotlin.android)
   alias(libs.plugins.ksp)
   id("kotlin-parcelize")
+  kotlin("plugin.serialization") version "1.6.0"
 }
 
 android {
@@ -68,6 +69,8 @@ dependencies {
   implementation(libs.androidx.viewmodel.ktx)
   implementation(libs.androidx.material.icons.ext)
   implementation(libs.slack.circuit.foundation)
+  implementation(libs.androidx.navigation.compose)
+  implementation(libs.kotlinx.serialization.json)
   ksp(libs.androidx.room.compiler)
   testImplementation(libs.junit)
   androidTestImplementation(libs.androidx.junit)
