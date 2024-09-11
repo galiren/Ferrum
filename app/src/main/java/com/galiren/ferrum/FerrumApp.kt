@@ -138,17 +138,17 @@ private fun FerrumAppBottomBar(route: Route, navController: NavController) {
   }
 }
 
-//interface Route {
+// interface Route {
 //
-//}
-//@Serializable
-//object MainRoute
+// }
+// @Serializable
+// object MainRoute
 //
-//@Serializable
-//object SummaryRoute
+// @Serializable
+// object SummaryRoute
 //
-//@Serializable
-//object ConfigurationRoute
+// @Serializable
+// object ConfigurationRoute
 
 @Serializable
 sealed interface Route {
@@ -163,7 +163,7 @@ sealed interface Route {
 }
 
 data class AppState internal constructor(
-  val currentRoute: Route = Route.MainRoute
+  val currentRoute: Route = Route.MainRoute,
 )
 
 @Composable

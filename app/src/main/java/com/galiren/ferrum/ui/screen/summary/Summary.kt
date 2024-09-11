@@ -13,17 +13,17 @@ import androidx.compose.ui.unit.sp
 // todo placeholder
 @Composable
 fun SummaryScreen(
-  modifier: Modifier = Modifier
+  modifier: Modifier = Modifier,
 ) {
   Column(
     modifier = modifier.fillMaxSize(),
     verticalArrangement = Arrangement.Center,
-    horizontalAlignment = Alignment.CenterHorizontally
+    horizontalAlignment = Alignment.CenterHorizontally,
   ) {
     Text(
       text = "Summary (WIP)",
       fontSize = 24.sp,
-      fontWeight = FontWeight.Black
+      fontWeight = FontWeight.Black,
     )
   }
 }
