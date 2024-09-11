@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.galiren.ferrum.data.Expense
 import com.galiren.ferrum.data.ExpenseEntity
 import com.galiren.ferrum.data.totalCost
@@ -67,8 +68,10 @@ data object MainScreen : Screen {
 @Composable
 fun ExpenseList(
   modifier: Modifier = Modifier,
-  state: MainScreen.State,
+  viewModel: MainViewModel = viewModel(),
+//  state: MainUiState,
 ) {
+  val state = viewModel.uiState
   Scaffold(
     modifier = modifier.fillMaxSize(),
     // todo navigation
