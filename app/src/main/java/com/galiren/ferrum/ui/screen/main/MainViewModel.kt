@@ -1,11 +1,11 @@
-package com.galiren.ferrum.ui.screen
+package com.galiren.ferrum.ui.screen.main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.galiren.ferrum.data.Expense
 import com.galiren.ferrum.data.ExpenseEntity
-import com.galiren.ferrum.ui.screen.MainScreen.Event
+import com.galiren.ferrum.ui.screen.main.MainScreen.Event
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

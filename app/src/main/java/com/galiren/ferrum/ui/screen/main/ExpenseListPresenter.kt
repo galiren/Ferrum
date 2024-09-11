@@ -1,4 +1,4 @@
-package com.galiren.ferrum.ui.screen
+package com.galiren.ferrum.ui.screen.main
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -60,6 +60,7 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao) : Presenter<MainS
             isLoading = false
           }
         }
+
         is MainScreen.Event.OpenDialog -> {
           // todo open item details
           dialogData = event.expense
@@ -77,6 +78,7 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao) : Presenter<MainS
             isShowDeletionDialog = false
           }
         }
+
         is MainScreen.Event.ExpenseDialogConfirm -> {
           isShowExpenseDialog = false
           isLoading = true
@@ -86,10 +88,12 @@ class ExpenseListPresenter(private val expenseDao: ExpenseDao) : Presenter<MainS
             isLoading = false
           }
         }
+
         is MainScreen.Event.CloseExpenseDialog -> {
           isShowExpenseDialog = false
           dialogData = null
         }
+
         is MainScreen.Event.CloseDeletionDialog -> {
           isShowDeletionDialog = false
           deleteItemId = null

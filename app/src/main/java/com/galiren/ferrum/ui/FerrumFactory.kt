@@ -1,8 +1,8 @@
 package com.galiren.ferrum.ui
 
 import com.galiren.ferrum.FerrumApplication
-import com.galiren.ferrum.ui.screen.ExpenseListPresenter
-import com.galiren.ferrum.ui.screen.MainScreen
+import com.galiren.ferrum.ui.screen.main.ExpenseListPresenter
+import com.galiren.ferrum.ui.screen.main.MainScreen
 import com.slack.circuit.runtime.CircuitContext
 import com.slack.circuit.runtime.Navigator
 import com.slack.circuit.runtime.presenter.Presenter

@@ -1,4 +1,4 @@
-package com.galiren.ferrum.ui.screen
+package com.galiren.ferrum.ui.screen.main
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,19 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -64,124 +52,52 @@ data object MainScreen : Screen {
   }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExpenseList(
   modifier: Modifier = Modifier,
   viewModel: MainViewModel = viewModel(),
-//  state: MainUiState,
 ) {
   val state = viewModel.uiState
-  Scaffold(
-    modifier = modifier.fillMaxSize(),
-    // todo navigation
-    bottomBar = {
-      NavigationBar {
-        NavigationBarItem(
-          selected = true,
-          onClick = { /*TODO*/ },
-          icon = {
-            Icon(Icons.Default.Home, contentDescription = "Home")
-          },
-          label = {
-            Text(
-              text = "Home",
-              fontWeight = FontWeight.Bold,
-            )
-          },
-        )
-        NavigationBarItem(
-          selected = false,
-          onClick = { /*TODO*/ },
-          icon = {
-            Icon(Icons.Default.Star, contentDescription = "Home")
-          },
-          label = {
-            Text(
-              text = "Summary",
-              fontWeight = FontWeight.Bold,
-            )
-          },
-        )
-        NavigationBarItem(
-          selected = false,
-          onClick = { /*TODO*/ },
-          icon = {
-            Icon(Icons.Default.Settings, contentDescription = "Home")
-          },
-          label = {
-            Text(
-              text = "Configuration",
-              fontWeight = FontWeight.Bold,
-            )
-          },
-        )
-      }
-    },
-    topBar = {
-      CenterAlignedTopAppBar(
-        title = {
-          Text(
-            text = "Ferrum",
-            fontWeight = FontWeight.Bold,
-          )
-        },
-      )
-    },
-    floatingActionButton = {
-      FloatingActionButton(
-        onClick = {
-          state.eventSink(MainScreen.Event.OpenDialog(null))
-        },
+
+  when (state.isLoading) {
+    true -> {
+      Column(
+        modifier = modifier
+          .fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
       ) {
-        Icon(
-          imageVector = Icons.Default.Add,
-          contentDescription = "Add",
-        )
+        CircularProgressIndicator()
       }
-    },
-  ) { paddingValues ->
-    when (state.isLoading) {
-      true -> {
-        Column(
-          modifier = modifier
-            .fillMaxSize()
-            .padding(paddingValues),
-          horizontalAlignment = Alignment.CenterHorizontally,
-          verticalArrangement = Arrangement.Center,
-        ) {
-          CircularProgressIndicator()
-        }
-        state.eventSink(MainScreen.Event.Init)
-      }
-      else -> {
-        ExpenseList(
-          modifier = modifier.padding(paddingValues),
-          expenses = state.expenses,
-          itemClick = {
-            state.eventSink(MainScreen.Event.OpenDialog(it))
-          },
-          itemLongPress = {
-            state.eventSink(MainScreen.Event.OpenDeletionDialog(it))
-          },
-          onExpenseDialogDismissRequest = {
-            state.eventSink(MainScreen.Event.CloseExpenseDialog)
-          },
-          onDeletionDialogDismissRequest = {
-            state.eventSink(MainScreen.Event.CloseDeletionDialog)
-          },
-          onConfirmation = {
-            state.eventSink(MainScreen.Event.ExpenseDialogConfirm(it))
-          },
-          itemDeleteAction = {
-            state.eventSink(MainScreen.Event.ItemDeletion(it))
-          },
-          showExpenseDialog = state.isShowExpenseDialog,
-          showDeletionDialog = state.isShowDeletionDialog,
-          dialogData = state.dialogData,
-          deleteItemId = state.deleteItemId,
-        )
-      }
+      state.eventSink(MainScreen.Event.Init)
+    }
+    else -> {
+      ExpenseList(
+        modifier = modifier,
+        expenses = state.expenses,
+        itemClick = {
+          state.eventSink(MainScreen.Event.OpenDialog(it))
+        },
+        itemLongPress = {
+          state.eventSink(MainScreen.Event.OpenDeletionDialog(it))
+        },
+        onExpenseDialogDismissRequest = {
+          state.eventSink(MainScreen.Event.CloseExpenseDialog)
+        },
+        onDeletionDialogDismissRequest = {
+          state.eventSink(MainScreen.Event.CloseDeletionDialog)
+        },
+        onConfirmation = {
+          state.eventSink(MainScreen.Event.ExpenseDialogConfirm(it))
+        },
+        itemDeleteAction = {
+          state.eventSink(MainScreen.Event.ItemDeletion(it))
+        },
+        showExpenseDialog = state.isShowExpenseDialog,
+        showDeletionDialog = state.isShowDeletionDialog,
+        dialogData = state.dialogData,
+        deleteItemId = state.deleteItemId,
+      )
     }
   }
 }
