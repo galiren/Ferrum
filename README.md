@@ -13,7 +13,7 @@ I want to express respect and gratitude to my parents.
 
 > [!NOTE]
 > This project has plans to remove [circuit](https://slackhq.github.io/circuit/) and rewrite UI in
-> native Compose way. related works could be found at [`rewrite`](https://github.com/galiren/Ferrum/tree/rewrite) branch.
+> native Compose way. related works will be open sourced later.
 
 - [x] Add item (with limited features)
 - [x] Delete item (long press)
